@@ -1,4 +1,4 @@
-<p align="center"><img src="https://assets.entrepreneur.com/content/3x2/2000/20150612050207-shutterstock-195559808.jpeg?width=700&crop=2:1" width="200"></p>
+<p align="center"><img src="https://assets.entrepreneur.com/content/3x2/2000/20150612050207-shutterstock-195559808.jpeg?width=700&crop=2:1" width="400"></p>
 
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
@@ -13,7 +13,7 @@
 
 Ecommerce Admin is a backend for ecommerce app. With this, user can create, read, update and delete Products and Categories and even receive and process orders from the app.
 
-Coded in Laravel 5.6
+Coded in Laravel v5.6
 
 ## Contributing
 
