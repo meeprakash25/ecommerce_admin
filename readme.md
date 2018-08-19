@@ -1,4 +1,4 @@
-<p align="center"><img src="https://assets.entrepreneur.com/content/3x2/2000/20150612050207-shutterstock-195559808.jpeg?width=700&crop=2:1"></p><br><br>
+<p align="center"><img src="https://assets.entrepreneur.com/content/3x2/2000/20150612050207-shutterstock-195559808.jpeg?width=700&crop=2:1" width="200"></p>
 
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
