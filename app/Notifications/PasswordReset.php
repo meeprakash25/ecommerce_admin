@@ -43,7 +43,7 @@ class PasswordReset extends Notification
     {
         return (new MailMessage)
             ->line('You are receiving this email because we received a password reset request for your account.')
-            ->from('administrator@ecommerce.com')
+            ->from('ecommerce@ecommerce.com')
             ->subject('Reset your password')
             ->action('Reset Password', url('password/reset', $this->token))
             ->line('If you did not request a password reset, no further action is required.');

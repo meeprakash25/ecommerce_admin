@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     //
-    protected $uploads = '/images/category/';
-    protected $fillable = ['name', 'category_id'];
+    protected $fillable = ['name', 'category_id', 'product_id'];
 
     public function category()
     {
         return $this->belongsTo('App\Category');
     }
 
-    public function getNameAttribute($name)
+    public function product()
     {
-        return $this->uploads.$name;
+        return $this->belongsTo('App\Product');
     }
+
 }

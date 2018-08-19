@@ -13,8 +13,19 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('order', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->string('address');
+            $table->string('city');
+            $table->string('province');
+            $table->string('shipping_type');
+            $table->dateTime('date_time');
+            $table->string('phone');
+            $table->string('order_list');
+            $table->text('comment');
+            $table->string('email');
+            $table->string('status')->default(0);
             $table->timestamps();
         });
     }
@@ -26,6 +37,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('orders');
     }
 }

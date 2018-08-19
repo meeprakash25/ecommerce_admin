@@ -13,4 +13,13 @@ class Category extends Model
     {
         return $this->hasOne('App\Image');
     }
+
+    public function imagePath(){
+        return 'ecommerce.test/images/category/';
+    }
+
+    public function products()
+    {
+        return $this->hasMany('App\Product');
+    }
 }

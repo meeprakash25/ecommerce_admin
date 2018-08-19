@@ -12,25 +12,42 @@ use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    private $paginate_number = 5;
+
     public function index()
     {
         //
-        $categories = Category::paginate(1);
-        return view('category.category', compact('categories'));
+        $paginate_number = $this->paginate_number;
+        $categories = Category::paginate($paginate_number);
+        // return $categories;
+        return view('category.category', compact('categories','paginate_number'));
     }
 
     public function search(Request $request)
     {
+        $paginate_number = $this->paginate_number;
         $query = $request['query'];
 
         if ($query != '') {
-            $categories = Category::where('name', 'LIKE', '%'.$query.'%')->paginate(1);
-            return view('category.category', compact('categories'));
+            $categories = Category::where('name', 'LIKE', '%'.$query.'%')->paginate($paginate_number);
+            return view('category.category', compact('categories','paginate_number'));
         } else {
             return redirect('categories');
         }
@@ -58,38 +75,24 @@ class CategoryController extends Controller
     {
         //
         $input = $request->all();
-        // return $request;
-        // ['name'=>$request->name]
         try {
-            $result = $category = Category::create($input);
+            $category = Category::create($input);
 
-            if ($file = $request->file('image') && $result) {
+            if ($file = $request->file('image')) {
 
-                $name = 'category_'.$category->id.'.'.$file->getClientOriginalExtension(); // $name = category_(lastinserted id).ext
+                $name = 'category_'.$category->id.'.'.$file->getClientOriginalExtension();
 
                 $file->move('images/category', $name);
-                Image::create(['category_id' => $category->id, 'name' => $name]);
+                $category->image()->create(['category_id' => $category->id, 'name' => $name]);
             }
 
             Session::flash('message', 'Category Added');
         } catch (\Exception $e) {
             // do task when error
-            Session::flash('error', 'Failed'.$e->getMessage());
+            Session::flash('error', 'Failed '.$e->getMessage());
         }
 
         return redirect('/categories');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-        return redirect('categories');
     }
 
     /**
@@ -101,9 +104,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         //
-
         $category = Category::findOrFail($id);
-
         return view('category.edit', compact('category'));
     }
 
@@ -116,21 +117,29 @@ class CategoryController extends Controller
      */
     public function update(CategoryUpdateRequest $request, $id)
     {
-        //
-        $category = new Category();
+        $url = $request->input('url');
+        try {
+            $category = Category::findOrFail($id);
+            $category->name = $request->input('name');
 
-        $result = $category->whereId($id)->update(['name' => $request->name]);
+            if ($file = $request->file('image')) {
 
-        if ($file = $request->file('image') && $result) {
+                if (file_exists($old_file = public_path().'/images/category/'.$category->image->name)) { // if category has photo already and if it exists
+                    unlink($old_file); // unlink the old image
+                }
 
-            $name = 'category_'.$category->id.'.'.$file->getClientOriginalExtension(); // image name will be the same as old database image name so no need to update images table
-            $file->move('images/category', $name);
+                $name = 'category_'.$id.'.'.$file->getClientOriginalExtension();
+                $file->move('images/category', $name);
+                $category->image->name = $name;
+            }
+            $category->push();
+
+            Session::flash('message', 'Update Success');
+        } catch (\Exception $e) {
+            // do task when error
+            Session::flash('error', 'Failed '.$e->getMessage());
         }
-
-
-        Session::flash('message', 'Update Success');
-
-        return redirect('/categories');
+        return redirect($url);
     }
 
     /**
@@ -139,19 +148,21 @@ class CategoryController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //
-        $category = Category::findOrFail($id);
+        try {
+            $category = Category::findOrFail($id);
+            if (file_exists($file = public_path().'/images/category/'.$category->image->name)) {
+                unlink($file);
+            }
 
-        $file = public_path().$category->image->name;
-        if (file_exists('your_file_name')) {
-            unlink($file);
+            $category->delete();
+            Session::flash('message', 'Delete Success');
+        } catch (\Exception $e) {
+            // do task when error
+            Session::flash('error', 'Failed '.$e->getMessage());
         }
-
-        $category->delete();
-        Session::flash('message', 'Delete Success');
-
         return redirect('/categories');
     }
 }

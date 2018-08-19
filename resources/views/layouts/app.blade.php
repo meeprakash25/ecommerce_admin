@@ -9,15 +9,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" type="text/css" href="{{URL::asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+    {{--CSS--}}
+    <link rel="stylesheet" type="text/css" href="{{asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('plugins/lightbox2/css/lightbox.min.css')}}">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-    <script src="{{URL::asset('js/modernizr-2.8.3.js')}}"></script>
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -26,14 +24,14 @@
 <header>
     <nav class="menu" role="navigation">
         <ul>
-            <li><h2><a href="{{route('/')}}">{{__('Ecommerce')}}</a></h2></li>
+            <li><h2 class="mr-2"><a href="{{route('/')}}">{{__('Ecommerce')}}</a></h2></li>
             <li><a href="{{route('orders.index')}}">{{__('Order List')}}</a></li>
             <li><a href="{{route('categories.index')}}">{{__('Category')}}</a></li>
             <li><a href="{{route('products.index')}}">{{__('Product')}}</a></li>
-            <li><a href="{{route('/')}}">{{__('Setting')}}</a></li>
-            <li><a href="{{route('/')}}">{{__('User')}}</a></li>
+            <li><a href="{{route('settings.index')}}">{{__('Settings')}}</a></li>
+            <li><a href="{{route('users.index')}}">{{__('Users')}}</a></li>
             <li>
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                 </a>
 
@@ -45,24 +43,31 @@
     </nav>
     <a href="#" class="nav-toggle"><span class="fa fa-bars"></span></a>
 </header>
-<div id="info">
+<div class="container" id="info">
     <main class="py-4">
         @if(Session::has('message'))
             <div class="row justify-content-center">
-                <div class="col-md-4">
-                    <div class="alert alert-info">{{Session('message')}}</div>
+                <div class="col-md-2">
+                    <div class="badge badge-info"><span class="fa fa-check"></span> {{Session('message')}}</div>
                 </div>
             </div>
         @endif
         @if(Session::has('error'))
             <div class="row justify-content-center">
-                <div class="col-md-4">
-                    <div class="alert alert-danger">{{Session('error')}}</div>
+                <div class="col-md-2">
+                    <div class="badge badge-danger"><span class="fa fa-times"></span> {{Session('error')}}</div>
                 </div>
             </div>
         @endif
         @yield('content')
     </main>
 </div>
+<footer>
+@section('footer')
+    <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="{{ asset('js/modernizr-2.8.3.js')}}"></script>
+    @show
+</footer>
 </body>
 </html>

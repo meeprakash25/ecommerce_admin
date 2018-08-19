@@ -17777,7 +17777,7 @@ if (token) {
      * @private
      * @param {Array|Object} collection The collection to iterate over.
      * @param {Function[]|Object[]|string[]} iteratees The iteratees to sort by.
-     * @param {string[]} orders The sort order of `iteratees`.
+     * @param {string[]} orders The sort orders of `iteratees`.
      * @returns {Array} Returns the new sorted array.
      */
     function baseOrderBy(collection, iteratees, orders) {
@@ -18681,7 +18681,7 @@ if (token) {
      * Used by `_.orderBy` to compare multiple properties of a value to another
      * and stable sort them.
      *
-     * If `order` is unspecified, all values are sorted in ascending order. Otherwise,
+     * If `orders` is unspecified, all values are sorted in ascending order. Otherwise,
      * specify an order of "desc" for descending or "asc" for ascending sort order
      * of corresponding values.
      *
@@ -23598,7 +23598,7 @@ if (token) {
 
     /**
      * This method is like `_.sortBy` except that it allows specifying the sort
-     * order of the iteratees to sort by. If `order` is unspecified, all values
+     * orders of the iteratees to sort by. If `orders` is unspecified, all values
      * are sorted in ascending order. Otherwise, specify an order of "desc" for
      * descending or "asc" for ascending sort order of corresponding values.
      *
@@ -23609,7 +23609,7 @@ if (token) {
      * @param {Array|Object} collection The collection to iterate over.
      * @param {Array[]|Function[]|Object[]|string[]} [iteratees=[_.identity]]
      *  The iteratees to sort by.
-     * @param {string[]} [orders] The sort order of `iteratees`.
+     * @param {string[]} [orders] The sort orders of `iteratees`.
      * @param- {Object} [guard] Enables use as an iteratee for methods like `_.reduce`.
      * @returns {Array} Returns the new sorted array.
      * @example
@@ -28865,7 +28865,7 @@ if (token) {
         }
         index = offset + match.length;
 
-        // The JS engine embedded in Adobe product needs `match` returned in
+        // The JS engine embedded in Adobe products needs `match` returned in
         // order to produce the correct `offset` value.
         return match;
       });
