@@ -9,7 +9,7 @@
 
 ## About Ecommerce Admin
 
-Ecommerce Admin is a backend for ecommerce app. With this, user can create, read, update and delete Products and Categories and even receive orders from the app.
+Ecommerce Admin is a backend for ecommerce app. With this, user can create, read, update and delete Products and Categories and even receive and process orders from the app.
 
 Coded in Laravel 5.6
 
