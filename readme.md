@@ -15,10 +15,6 @@ Ecommerce Admin is a backend for ecommerce app. With this, user can create, read
 
 Coded in Laravel v5.6
 
-## Contributing
-
-Contributions are heartly welcomed.
-
 ## License
 
 Its an Open source Project, Anyone can download and use it.
